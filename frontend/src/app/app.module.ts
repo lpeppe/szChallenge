@@ -12,10 +12,20 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { UsersComponent } from "./users/users.component";
-import { AddUserComponent } from './add-user/add-user.component';
+import { AddUserComponent } from "./add-user/add-user.component";
+import { UsersTableComponent } from './users-table/users-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
-  declarations: [AppComponent, MainNavComponent, UsersComponent, AddUserComponent],
+  declarations: [
+    AppComponent,
+    MainNavComponent,
+    UsersComponent,
+    AddUserComponent,
+    UsersTableComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,7 +35,10 @@ import { AddUserComponent } from './add-user/add-user.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

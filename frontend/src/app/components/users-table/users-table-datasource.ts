@@ -3,8 +3,8 @@ import { MatPaginator } from "@angular/material/paginator";
 import { map, switchMap, tap } from "rxjs/operators";
 import { Observable, of as observableOf, merge } from "rxjs";
 
-import { UserService } from "./../services/user.service";
-import { User } from "./../models/user.model";
+import { UserService } from "../../services/user.service";
+import { User } from "../../models/user.model";
 /**
  * Data source for the UsersTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
@@ -27,7 +27,6 @@ export class UsersTableDataSource extends DataSource<User> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const { pageIndex, pageSize } = this.paginator;
-    console.log(pageSize);
     this.userService
       .getUserData(pageIndex, pageSize)
       .subscribe(({ total }) => (this.totalLength = total));

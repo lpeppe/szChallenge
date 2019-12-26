@@ -3,8 +3,8 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTable } from "@angular/material/table";
 import { UsersTableDataSource } from "./users-table-datasource";
 
-import { User } from "./../models/user.model";
-import { UserService } from "./../services/user.service";
+import { User } from "../../models/user.model";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: "app-users-table",

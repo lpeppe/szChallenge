@@ -1,1 +1,32 @@
-<p>add-user works!</p>
+<mat-toolbar>
+  <span>Aggiungi un nuovo utente</span>
+</mat-toolbar>
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+  <div class="form-container">
+    <mat-form-field>
+      <input matInput placeholder="Nome" required ngModel name="name" />
+      <mat-error>Inserisci il nome</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Cognome" required ngModel name="surname" />
+      <mat-error>Inserisci il cognome</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Data di nascita"
+        required
+        ngModel
+        name="dateOfBirth"
+      />
+      <mat-error>Data di nascita non valida</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" required ngModel name="email" />
+      <mat-error>Email non valida</mat-error>
+    </mat-form-field>
+    <button mat-raised-button type="submit" [disabled]="!form.valid">
+      Aggiungi utente
+    </button>
+  </div>
+</form>

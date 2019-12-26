@@ -1,10 +1,10 @@
 "use strict";
-const User = use("App/Models/User");
 const Database = use("Database");
 
 class UserController {
   getUsers({ request }) {
-    const { pageIndex, pageSize } = request.all();
+    let { pageIndex, pageSize } = request.all();
+    pageIndex > 0 ? pageIndex++ : null;
     return Database.from("users")
       .select(
         "id",

@@ -4,7 +4,7 @@
 <form (ngSubmit)="onSubmit()" #form="ngForm">
   <div class="form-container">
     <mat-form-field>
-      <input matInput placeholder="Nome" required ngModel name="name" />
+      <input matInput placeholder="Nome" required ngModel name="firstName" />
       <mat-error>Inserisci il nome</mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -22,7 +22,7 @@
       <mat-error>Data di nascita non valida</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Email" required ngModel name="email" />
+      <input matInput placeholder="Email" required email ngModel name="email" />
       <mat-error>Email non valida</mat-error>
     </mat-form-field>
     <button mat-raised-button type="submit" [disabled]="!form.valid">

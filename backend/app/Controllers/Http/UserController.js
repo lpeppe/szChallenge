@@ -1,5 +1,6 @@
 "use strict";
 const Database = use("Database");
+const User = use("App/Models/User");
 
 class UserController {
   getUsers({ request }) {
@@ -14,6 +15,21 @@ class UserController {
         "email"
       )
       .paginate(pageIndex, pageSize);
+  }
+
+  addUser({ request }) {
+    const {
+      firstName: first_name,
+      surname,
+      dateOfBirth: date_of_birth,
+      email
+    } = request.all();
+    return User.create({
+      first_name,
+      surname,
+      date_of_birth,
+      email
+    });
   }
 }
 

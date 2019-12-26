@@ -18,4 +18,5 @@ const Route = use("Route");
 
 Route.group(() => {
   Route.get("users", "UserController.getUsers");
+  Route.post("addUser", "UserController.addUser").validator("AddUser");
 }).prefix("api/v1");

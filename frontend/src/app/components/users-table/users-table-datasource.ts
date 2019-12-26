@@ -1,3 +1,4 @@
+import { UserData } from "./../../models/usersData.model";
 import { DataSource } from "@angular/cdk/collections";
 import { MatPaginator } from "@angular/material/paginator";
 import { map, switchMap, tap } from "rxjs/operators";
@@ -24,25 +25,17 @@ export class UsersTableDataSource extends DataSource<User> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<User[]> {
-    // Combine everything that affects the rendered data into one update
-    // stream for the data-table to consume.
-    const { pageIndex, pageSize } = this.paginator;
-    this.userService
-      .getUserData(pageIndex, pageSize)
-      .subscribe(({ total }) => (this.totalLength = total));
+    const getUsrDataObs = () =>
+      this.userService
+        .getUserData(this.paginator.pageIndex, this.paginator.pageSize)
+        .pipe(
+          tap(({ total }) => (this.totalLength = total)),
+          map(userData => userData.data)
+        );
 
-    const dataMutations = [
-      this.userService.getUsers(pageIndex, pageSize),
-      this.paginator.page
-    ];
-
-    return merge(...dataMutations).pipe(
-      switchMap(() =>
-        this.userService.getUsers(
-          this.paginator.pageIndex,
-          this.paginator.pageSize
-        )
-      )
+    return merge(
+      getUsrDataObs(),
+      this.paginator.page.pipe(switchMap(() => getUsrDataObs()))
     );
   }
 
@@ -51,13 +44,4 @@ export class UsersTableDataSource extends DataSource<User> {
    * any open connections or free any held resources that were set up during connect.
    */
   disconnect() {}
-
-  /**
-   * Paginate the data (client-side). If you're using server-side pagination,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
-  // private getPagedData() {
-  //   const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-  //   return data.splice(startIndex, this.paginator.pageSize);
-  // }
 }

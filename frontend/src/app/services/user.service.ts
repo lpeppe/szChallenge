@@ -13,12 +13,6 @@ export class UserService {
   private serviceUrl = "http://localhost:3333/api/v1";
   constructor(private http: HttpClient) {}
 
-  getUsers(pageIndex: number, pageSize: number): Observable<User[]> {
-    return (this.http.get(
-      `${this.serviceUrl}/users?pageIndex=${pageIndex}&pageSize=${pageSize}`
-    ) as Observable<UserData>).pipe(map(({ data }) => data));
-  }
-
   getUserData(pageIndex: number, pageSize: number): Observable<UserData> {
     return this.http.get(
       `${this.serviceUrl}/users?pageIndex=${pageIndex}&pageSize=${pageSize}`

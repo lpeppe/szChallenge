@@ -22,13 +22,17 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { DateComponent } from './components/date/date.component';
+import { DateDirective } from './directives/date.directive';
 @NgModule({
   declarations: [
     AppComponent,
     MainNavComponent,
     UsersComponent,
     AddUserComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    DateComponent,
+    DateDirective
   ],
   imports: [
     BrowserModule,

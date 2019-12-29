@@ -13,11 +13,13 @@
     </mat-form-field>
     <mat-form-field>
       <input
+        appDate
         matInput
         placeholder="Data di nascita"
         required
-        ngModel
+        [(ngModel)]="date"
         name="dateOfBirth"
+        (ngModelChange)="test()"
       />
       <mat-error>Data di nascita non valida</mat-error>
     </mat-form-field>

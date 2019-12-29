@@ -1,7 +1,7 @@
 import { User } from "./../models/user.model";
 import { map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 
 import { Observable } from "rxjs";
 import { UserData } from "../models/usersData.model";
@@ -14,9 +14,11 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUserData(pageIndex: number, pageSize: number): Observable<UserData> {
-    return this.http.get(
-      `${this.serviceUrl}/users?pageIndex=${pageIndex}&pageSize=${pageSize}`
-    ) as Observable<UserData>;
+    return this.http.get(`${this.serviceUrl}/users`, {
+      params: new HttpParams()
+        .set("pageIndex", pageIndex.toString())
+        .set("pageSize", pageSize.toString())
+    }) as Observable<UserData>;
   }
 
   addUser(userData: User) {

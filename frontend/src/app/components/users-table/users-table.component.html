@@ -1,4 +1,7 @@
 <div class="mat-elevation-z8 users-table">
+  <mat-form-field>
+    <input matInput placeholder="Filter" #filterInput />
+  </mat-form-field>
   <table mat-table class="full-width-table" aria-label="Elements">
     <!-- First name Column -->
     <ng-container matColumnDef="firstName">
@@ -32,8 +35,8 @@
     #paginator
     [length]="dataSource?.totalLength"
     [pageIndex]="0"
-    [pageSize]="10"
-    [pageSizeOptions]="[25, 50, 100, 250]"
+    [pageSize]="minPageSize"
+    [pageSizeOptions]="[10, 25, 50, 100, 250]"
   >
   </mat-paginator>
 </div>

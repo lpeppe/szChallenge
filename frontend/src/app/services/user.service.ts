@@ -13,11 +13,19 @@ export class UserService {
   private serviceUrl = "http://localhost:3333/api/v1";
   constructor(private http: HttpClient) {}
 
-  getUserData(pageIndex: number, pageSize: number): Observable<UserData> {
+  getUserData(
+    pageIndex: number,
+    pageSize: number,
+    filter: string
+  ): Observable<UserData> {
+    let params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString());
+    if (filter !== "") {
+      params = params.set("filter", filter);
+    }
     return this.http.get(`${this.serviceUrl}/users`, {
-      params: new HttpParams()
-        .set("pageIndex", pageIndex.toString())
-        .set("pageSize", pageSize.toString())
+      params
     }) as Observable<UserData>;
   }
 

@@ -1,8 +1,6 @@
-import { UserData } from "./../../models/usersData.model";
 import { DataSource } from "@angular/cdk/collections";
-import { MatPaginator } from "@angular/material/paginator";
-import { map, switchMap, tap } from "rxjs/operators";
-import { Observable, of as observableOf, merge } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { Observable, of, BehaviorSubject } from "rxjs";
 
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user.model";
@@ -13,7 +11,7 @@ import { User } from "../../models/user.model";
  */
 export class UsersTableDataSource extends DataSource<User> {
   totalLength: number;
-  paginator: MatPaginator;
+  private usersSubject = new BehaviorSubject<User[]>([]);
 
   constructor(private userService: UserService) {
     super();
@@ -25,23 +23,27 @@ export class UsersTableDataSource extends DataSource<User> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<User[]> {
-    const getUsrDataObs = () =>
-      this.userService
-        .getUserData(this.paginator.pageIndex, this.paginator.pageSize)
-        .pipe(
-          tap(({ total }) => (this.totalLength = total)),
-          map(userData => userData.data)
-        );
-
-    return merge(
-      getUsrDataObs(),
-      this.paginator.page.pipe(switchMap(() => getUsrDataObs()))
-    );
+    return this.usersSubject.asObservable();
   }
 
   /**
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.
    */
-  disconnect() {}
+  disconnect() {
+    this.usersSubject.complete();
+  }
+
+  loadUsers(pageIndex: number, pageSize: number, filter = "") {
+    this.userService
+      .getUserData(pageIndex, pageSize, filter)
+      .pipe(
+        // if the observable errors out just emit an empty array
+        catchError(() => of({ data: [], total: 0 }))
+      )
+      .subscribe(({ data, total }) => {
+        this.totalLength = total;
+        this.usersSubject.next(data);
+      });
+  }
 }

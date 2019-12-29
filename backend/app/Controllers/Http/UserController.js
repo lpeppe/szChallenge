@@ -6,32 +6,22 @@ class UserController {
   getUsers({ request }) {
     let { pageIndex, pageSize, filter } = request.all();
     pageIndex > 0 ? pageIndex++ : null;
+    let dbQuery = Database.from("users").select(
+      "id",
+      "first_name as firstName",
+      "surname",
+      "date_of_birth as dateOfBirth",
+      "email"
+    );
     if (filter) {
       filter = filter.trim().toLowerCase();
-      return Database.from("users")
-        .select(
-          "id",
-          "first_name as firstName",
-          "surname",
-          "date_of_birth as dateOfBirth",
-          "email"
-        )
-        .whereRaw(
-          `first_name LIKE '%${filter}%' 
+      dbQuery = dbQuery.whereRaw(
+        `first_name LIKE '%${filter}%' 
               OR surname LIKE '%${filter}%' 
               OR email LIKE '%${filter}%'`
-        )
-        .paginate(pageIndex, pageSize);
+      );
     }
-    return Database.from("users")
-      .select(
-        "id",
-        "first_name as firstName",
-        "surname",
-        "date_of_birth as dateOfBirth",
-        "email"
-      )
-      .paginate(pageIndex, pageSize);
+    return dbQuery.paginate(pageIndex, pageSize);
   }
 
   addUser({ request }) {

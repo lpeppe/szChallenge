@@ -33,7 +33,7 @@ import { DateDirective } from "./directives/date.directive";
     DateDirective
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: "serverApp" }),
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,

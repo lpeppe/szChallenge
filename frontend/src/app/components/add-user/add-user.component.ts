@@ -9,7 +9,7 @@ import { UserService } from "./../../services/user.service";
 })
 export class AddUserComponent implements OnInit {
   @ViewChild("form", { static: false }) form: NgForm;
-  date: string;
+  dateStr: string;
   addUserForm: FormGroup;
 
   constructor(private userService: UserService) {}

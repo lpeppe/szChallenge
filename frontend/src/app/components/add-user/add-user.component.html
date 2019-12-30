@@ -1,33 +1,29 @@
 <mat-toolbar>
   <span>Aggiungi un nuovo utente</span>
 </mat-toolbar>
-<form (ngSubmit)="onSubmit()" #form="ngForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="addUserForm">
   <div class="form-container">
     <mat-form-field>
-      <input matInput placeholder="Nome" required ngModel name="firstName" />
+      <input matInput placeholder="Nome" formControlName="firstName" />
       <mat-error>Inserisci il nome</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Cognome" required ngModel name="surname" />
+      <input matInput placeholder="Cognome" formControlName="surname" />
       <mat-error>Inserisci il cognome</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
-        appDate
         matInput
         placeholder="Data di nascita"
-        required
-        [(ngModel)]="date"
-        name="dateOfBirth"
-        (ngModelChange)="test()"
+        formControlName="dateOfBirth"
       />
       <mat-error>Data di nascita non valida</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Email" required email ngModel name="email" />
+      <input matInput placeholder="Email" formControlName="email" />
       <mat-error>Email non valida</mat-error>
     </mat-form-field>
-    <button mat-raised-button type="submit" [disabled]="!form.valid">
+    <button mat-raised-button type="submit">
       Aggiungi utente
     </button>
   </div>

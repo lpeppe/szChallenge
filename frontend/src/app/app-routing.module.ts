@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { UsersComponent } from "./components/users/users.component";
 import { AddUserComponent } from "./components/add-user/add-user.component";
+import { UsersTableComponent } from "./components/users-table/users-table.component";
 
 const routes: Routes = [
-  { path: "users", component: UsersComponent },
+  { path: "users", component: UsersTableComponent },
   { path: "addUser", component: AddUserComponent },
   { path: "", redirectTo: "users", pathMatch: "full" }
 ];

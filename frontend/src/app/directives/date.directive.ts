@@ -51,29 +51,34 @@ export class DateDirective implements ControlValueAccessor {
   // just as an example - let's make this field accept only numbers
   @HostListener("keydown", ["$event"])
   _handleKeyDown($event: KeyboardEvent): void {
+    // accept only numbers or backspace
     if (
       ($event.keyCode < 48 ||
         $event.keyCode > 57 ||
         ($event.target as any).value.length >= 10) &&
       $event.keyCode !== 8
     ) {
-      // not number or backspace, killing event
       $event.preventDefault();
       $event.stopPropagation();
     }
   }
 
+  // set the input field as touched with the blur event
+  @HostListener("blur", ["$event"])
+  _handleBlur($event: KeyboardEvent): void {
+    this.onTouched();
+  }
+
   @HostListener("input", ["$event"])
   _handleInput($event: any): void {
-    // if the user doesn't press the backspace
     if (
+      // if the user doesn't press the backspace
       $event.keyCode !== 8 &&
       ($event.target.value.length === 2 || $event.target.value.length === 5) &&
       $event.data
     ) {
       ($event.target as any).value = `${($event.target as any).value}/`;
     }
-    // this is what we should call to inform others that our value has changed
     this.onChange(($event.target as any).value);
   }
 }

@@ -1,3 +1,4 @@
+import { UserService } from "./services/user.service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -13,7 +14,6 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
-import { UsersComponent } from "./components/users/users.component";
 import { AddUserComponent } from "./components/add-user/add-user.component";
 import { UsersTableComponent } from "./components/users-table/users-table.component";
 import { MatTableModule } from "@angular/material/table";
@@ -27,7 +27,6 @@ import { DateDirective } from "./directives/date.directive";
   declarations: [
     AppComponent,
     MainNavComponent,
-    UsersComponent,
     AddUserComponent,
     UsersTableComponent,
     DateDirective
@@ -51,7 +50,7 @@ import { DateDirective } from "./directives/date.directive";
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

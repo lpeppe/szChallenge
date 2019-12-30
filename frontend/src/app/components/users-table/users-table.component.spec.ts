@@ -1,23 +1,60 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { UserService } from "./../../services/user.service";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
+import { MatTableModule } from "@angular/material/table";
 
-import { UsersTableComponent } from './users-table.component';
+import { UsersTableComponent } from "./users-table.component";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatButtonModule } from "@angular/material/button";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import { HttpClientModule } from "@angular/common/http";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { of } from "rxjs/internal/observable/of";
 
-describe('UsersTableComponent', () => {
+const stubData = [
+  {
+    id: 7,
+    firstName: "Aaron",
+    surname: "Gentili",
+    dateOfBirth: 4441261874525,
+    email: "dolca@huhfe.th"
+  },
+  {
+    id: 13,
+    firstName: "Mildred",
+    surname: "Klaassen",
+    dateOfBirth: 3729141636534,
+    email: "dar@bohopo.kh"
+  }
+];
+
+describe("UsersTableComponent", () => {
   let component: UsersTableComponent;
   let fixture: ComponentFixture<UsersTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsersTableComponent ],
+      declarations: [UsersTableComponent],
       imports: [
         NoopAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatTableModule,
         MatPaginatorModule,
         MatSortModule,
-        MatTableModule,
+        HttpClientModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule
       ]
     }).compileComponents();
   }));
@@ -28,7 +65,75 @@ describe('UsersTableComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should compile', () => {
+  it("should compile", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should contain table headers", () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(
+      compiled.querySelector("th.mat-column-firstName").textContent
+    ).toContain("First name");
+
+    expect(
+      compiled.querySelector("th.mat-column-surname").textContent
+    ).toContain("Surname");
+
+    expect(
+      compiled.querySelector("th.mat-column-dateOfBirth").textContent
+    ).toContain("Date of birth");
+
+    expect(compiled.querySelector("th.mat-column-email").textContent).toContain(
+      "Email"
+    );
+  });
+
+  it("should contain paginator", () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector("div.mat-paginator-container")).toBeDefined();
+  });
+
+  it("should contain filter", () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector("div.mat-form-field-infix")).toBeDefined();
+  });
+
+  it("should load users properly", () => {
+    const compiled = fixture.debugElement.nativeElement;
+    const dataSource = fixture.debugElement.componentInstance.dataSource;
+    spyOn(dataSource, "connect").and.returnValue(of(stubData));
+    fixture.detectChanges();
+    expect(
+      compiled.querySelector("tr:nth-child(1) > td.mat-column-firstName")
+        .textContent
+    ).toContain("Aaron");
+    expect(
+      compiled.querySelector("tr:nth-child(1) > td.mat-column-surname")
+        .textContent
+    ).toContain("Gentili");
+    expect(
+      compiled.querySelector("tr:nth-child(1) > td.mat-column-dateOfBirth")
+        .textContent
+    ).toContain("Sep 27, 2110");
+    expect(
+      compiled.querySelector("tr:nth-child(1) > td.mat-column-email")
+        .textContent
+    ).toContain("dolca@huhfe.th");
+    expect(
+      compiled.querySelector("tr:nth-child(2) > td.mat-column-firstName")
+        .textContent
+    ).toContain("Mildred");
+    expect(
+      compiled.querySelector("tr:nth-child(2) > td.mat-column-surname")
+        .textContent
+    ).toContain("Klaassen");
+    expect(
+      compiled.querySelector("tr:nth-child(2) > td.mat-column-dateOfBirth")
+        .textContent
+    ).toContain("Mar 3, 2088");
+    expect(
+      compiled.querySelector("tr:nth-child(2) > td.mat-column-email")
+        .textContent
+    ).toContain("dar@bohopo.kh");
   });
 });

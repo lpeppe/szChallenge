@@ -1,3 +1,4 @@
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { UserService } from "./services/user.service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -48,7 +49,8 @@ import { DateDirective } from "./directives/date.directive";
     HttpClientModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

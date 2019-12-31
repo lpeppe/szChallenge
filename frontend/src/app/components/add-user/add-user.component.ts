@@ -1,11 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import {
-  NgForm,
-  FormGroup,
-  FormControl,
-  Validators
-} from "@angular/forms";
+import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
 import { UserService } from "./../../services/user.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-add-user",
@@ -17,18 +13,21 @@ export class AddUserComponent implements OnInit {
   dateStr: string;
   addUserForm: FormGroup;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.addUserForm = new FormGroup({
       firstName: new FormControl(null, [
-        // allow the user to enter only letters
-        Validators.pattern(/^[A-Za-z]+$/),
+        // allow the user to enter only letters and space
+        Validators.pattern(/^[a-zA-Z\s]*$/),
         Validators.required
       ]),
       surname: new FormControl(null, [
-        // allow the user to enter only letters
-        Validators.pattern(/^[A-Za-z]+$/),
+        // allow the user to enter only letters and space
+        Validators.pattern(/^[a-zA-Z\s]*$/),
         Validators.required
       ]),
       email: new FormControl(null, [Validators.email, Validators.required]),
@@ -42,9 +41,24 @@ export class AddUserComponent implements OnInit {
     });
   }
   onSubmit() {
-    this.userService.addUser(this.addUserForm.value).subscribe(_ => {
-      this.form.resetForm();
-      this.addUserForm.reset();
-    }, console.error);
+    this.userService.addUser(this.addUserForm.value).subscribe(
+      _ => {
+        this.form.resetForm();
+        this.addUserForm.reset();
+        // this.snackBar.openFromComponent(SnackBarComponent, {
+        //   duration: 2000
+        // });
+        this.openSnackback("User added!");
+      },
+      () => {
+        this.openSnackback("An error occurred!");
+      }
+    );
+  }
+
+  private openSnackback(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000
+    });
   }
 }

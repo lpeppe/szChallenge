@@ -18,7 +18,8 @@ class UserController {
       dbQuery = dbQuery.whereRaw(
         `first_name LIKE '%${filter}%' 
               OR surname LIKE '%${filter}%' 
-              OR email LIKE '%${filter}%'`
+              OR email LIKE '%${filter}%'
+              OR date_of_birth LIKE '%${filter}%'`
       );
     }
     return dbQuery.paginate(pageIndex, pageSize);

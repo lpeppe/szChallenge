@@ -22,14 +22,14 @@ const stubData = [
     id: 7,
     firstName: "Aaron",
     surname: "Gentili",
-    dateOfBirth: 4441261874525,
+    dateOfBirth: "27/12/1995",
     email: "dolca@huhfe.th"
   },
   {
     id: 13,
     firstName: "Mildred",
     surname: "Klaassen",
-    dateOfBirth: 3729141636534,
+    dateOfBirth: "01/10/2001",
     email: "dar@bohopo.kh"
   }
 ];
@@ -114,7 +114,7 @@ describe("UsersTableComponent", () => {
     expect(
       compiled.querySelector("tr:nth-child(1) > td.mat-column-dateOfBirth")
         .textContent
-    ).toContain("Sep 27, 2110");
+    ).toContain("27/12/1995");
     expect(
       compiled.querySelector("tr:nth-child(1) > td.mat-column-email")
         .textContent
@@ -130,7 +130,7 @@ describe("UsersTableComponent", () => {
     expect(
       compiled.querySelector("tr:nth-child(2) > td.mat-column-dateOfBirth")
         .textContent
-    ).toContain("Mar 3, 2088");
+    ).toContain("01/10/2001");
     expect(
       compiled.querySelector("tr:nth-child(2) > td.mat-column-email")
         .textContent

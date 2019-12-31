@@ -5,8 +5,8 @@ class AddUser {
     return {
       email: "required|email|unique:users",
       dateOfBirth: "required|date",
-      surname: "required",
-      firstName: "required"
+      surname: "required|name",
+      firstName: "required|name"
     };
   }
 }

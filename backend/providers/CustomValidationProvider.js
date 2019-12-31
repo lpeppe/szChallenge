@@ -26,6 +26,7 @@ class DateValidationProvider extends ServiceProvider {
   boot() {
     const Validator = use("Validator");
     Validator.extend("date", this.isDateValid, "date not valid");
+    Validator.extend("name", this.isNameValid, "name not valid");
   }
 
   async isDateValid(data, field, message, args, get) {
@@ -41,6 +42,19 @@ class DateValidationProvider extends ServiceProvider {
     if (!dateRegex.test(value)) throw message;
     // throw error if date passed is in the future
     if (moment(value, "DD/MM/YYYY").isAfter(moment())) throw message;
+  }
+
+  async isNameValid(data, field, message, args, get) {
+    const value = get(data, field);
+    if (!value) {
+      /**
+       * skip validation if value is not defined. `required` rule
+       * should take care of it.
+       */
+      return;
+    }
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    if (!nameRegex.test(value)) throw message;
   }
 }
 

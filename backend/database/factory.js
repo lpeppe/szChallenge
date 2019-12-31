@@ -13,12 +13,13 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use("Factory");
+const moment = require("moment");
 
 Factory.blueprint("App/Models/User", faker => {
   return {
     first_name: faker.first(),
     surname: faker.last(),
-    date_of_birth: faker.date(),
+    date_of_birth: moment(faker.date()).format("DD/MM/YYYY"),
     email: faker.email()
   };
 });

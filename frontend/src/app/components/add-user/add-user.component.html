@@ -1,7 +1,7 @@
 <mat-toolbar>
   <span>Aggiungi un nuovo utente</span>
 </mat-toolbar>
-<form (ngSubmit)="onSubmit()" [formGroup]="addUserForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="addUserForm" #form="ngForm">
   <div class="form-container">
     <mat-form-field>
       <input matInput placeholder="Nome" formControlName="firstName" />
@@ -24,7 +24,7 @@
       <input matInput placeholder="Email" formControlName="email" />
       <mat-error>Email non valida</mat-error>
     </mat-form-field>
-    <button mat-raised-button type="submit">
+    <button mat-raised-button type="submit" [disabled]="!addUserForm.valid">
       Aggiungi utente
     </button>
   </div>

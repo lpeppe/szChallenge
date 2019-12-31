@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
+import {
+  NgForm,
+  FormGroup,
+  FormControl,
+  Validators
+} from "@angular/forms";
 import { UserService } from "./../../services/user.service";
 
 @Component({
@@ -37,9 +42,9 @@ export class AddUserComponent implements OnInit {
     });
   }
   onSubmit() {
-    console.log(this.addUserForm.value);
-    // this.userService
-    //   .addUser(this.addUserForm.value)
-    //   .subscribe(_ => this.addUserForm.resetForm(), console.error);
+    this.userService.addUser(this.addUserForm.value).subscribe(_ => {
+      this.form.resetForm();
+      this.addUserForm.reset();
+    }, console.error);
   }
 }

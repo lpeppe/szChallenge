@@ -48,10 +48,10 @@ export class AddUserComponent implements OnInit {
         // this.snackBar.openFromComponent(SnackBarComponent, {
         //   duration: 2000
         // });
-        this.openSnackback("User added!");
+        this.openSnackback("Utente aggiunto!");
       },
       () => {
-        this.openSnackback("An error occurred!");
+        this.openSnackback("C'è stato un errore!");
       }
     );
   }

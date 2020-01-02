@@ -1,23 +1,22 @@
-"use strict";
-
-const Suite = use("Test/Suite")("UserController.getUsers");
-const Helpers = use("Helpers");
+const { test, trait, before } = use("Test/Suite")("GetUsers");
 const ace = use("@adonisjs/ace");
-const fakeRequest = require("./fakeRequest");
-const UserController = require(`${Helpers.appRoot()}/app/Controllers/Http/UserController`);
-const { test, before } = Suite;
-// seed the database before running all the tests
+
+trait("Test/ApiClient");
+
+const QUERYSTRING = "/api/v1/users";
+
 before(async () => {
   await ace.call("migration:refresh");
   await ace.call("seed");
 });
-const uc = new UserController();
 
-test("make sure users are returned properly", async ({ assert }) => {
-  const userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 0, pageSize: 3 })
-  });
-  assert.deepEqual(userData, {
+test("Get list of downloads", async ({ client }) => {
+  let response = await client
+    .get(QUERYSTRING)
+    .query({ pageIndex: 0, pageSize: 3 })
+    .end();
+  response.assertStatus(200);
+  response.assertJSON({
     total: 30,
     perPage: 3,
     page: 0,
@@ -46,13 +45,12 @@ test("make sure users are returned properly", async ({ assert }) => {
       }
     ]
   });
-});
-
-test("make sure pagination works", async ({ assert }) => {
-  let userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 1, pageSize: 3 })
-  });
-  assert.deepEqual(userData, {
+  response = await client
+    .get(QUERYSTRING)
+    .query({ pageIndex: 1, pageSize: 3 })
+    .end();
+  response.assertStatus(200);
+  response.assertJSON({
     total: 30,
     perPage: 3,
     page: 2,
@@ -81,49 +79,15 @@ test("make sure pagination works", async ({ assert }) => {
       }
     ]
   });
-  userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 2, pageSize: 2 })
-  });
-  assert.deepEqual(userData, {
-    total: 30,
-    perPage: 2,
-    page: 3,
-    lastPage: 15,
-    data: [
-      {
-        id: 5,
-        firstName: "Sarah",
-        surname: "Herrera",
-        dateOfBirth: "22/08/2002",
-        email: "gokok@anizojmo.kh"
-      },
-      {
-        id: 6,
-        firstName: "Hattie",
-        surname: "Zini",
-        dateOfBirth: "23/12/1992",
-        email: "ocizupdi@ojkogul.bo"
-      }
-    ]
-  });
-  userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 10, pageSize: 5 })
-  });
-  assert.deepEqual(userData, {
-    total: 30,
-    perPage: 5,
-    page: 11,
-    lastPage: 6,
-    data: []
-  });
 });
 
-test("make sure filtering works", async ({ assert }) => {
-  // check name filtering
-  let userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 0, pageSize: 10, filter: "luis" })
-  });
-  assert.deepEqual(userData, {
+test("Get list of downloads filtered by name", async ({ client }) => {
+  const response = await client
+    .get(QUERYSTRING)
+    .query({ pageIndex: 0, pageSize: 10, filter: "luis" })
+    .end();
+  response.assertStatus(200);
+  response.assertJSON({
     total: 1,
     perPage: 10,
     page: 0,
@@ -138,11 +102,15 @@ test("make sure filtering works", async ({ assert }) => {
       }
     ]
   });
-  // check surname filtering
-  userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 0, pageSize: 10, filter: "fa" })
-  });
-  assert.deepEqual(userData, {
+});
+
+test("Get list of downloads filtered by surname", async ({ client }) => {
+  const response = await client
+    .get(QUERYSTRING)
+    .query({ pageIndex: 0, pageSize: 10, filter: "fa" })
+    .end();
+  response.assertStatus(200);
+  response.assertJSON({
     total: 2,
     perPage: 10,
     page: 0,
@@ -164,11 +132,15 @@ test("make sure filtering works", async ({ assert }) => {
       }
     ]
   });
-  // check date filtering
-  userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 0, pageSize: 10, filter: "17/07" })
-  });
-  assert.deepEqual(userData, {
+});
+
+test("Get list of downloads filtered by date of birth", async ({ client }) => {
+  const response = await client
+    .get(QUERYSTRING)
+    .query({ pageIndex: 0, pageSize: 10, filter: "17/07" })
+    .end();
+  response.assertStatus(200);
+  response.assertJSON({
     total: 1,
     perPage: 10,
     page: 0,
@@ -183,11 +155,15 @@ test("make sure filtering works", async ({ assert }) => {
       }
     ]
   });
-  // check email filtering
-  userData = await uc.getUsers({
-    request: fakeRequest({ pageIndex: 0, pageSize: 10, filter: "bo@" })
-  });
-  assert.deepEqual(userData, {
+});
+
+test("Get list of downloads filtered by date of email", async ({ client }) => {
+  const response = await client
+    .get(QUERYSTRING)
+    .query({ pageIndex: 0, pageSize: 10, filter: "bo@" })
+    .end();
+  response.assertStatus(200);
+  response.assertJSON({
     total: 1,
     perPage: 10,
     page: 0,

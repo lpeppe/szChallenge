@@ -73,15 +73,15 @@ describe("UsersTableComponent", () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(
       compiled.querySelector("th.mat-column-firstName").textContent
-    ).toContain("First name");
+    ).toContain("Nome");
 
     expect(
       compiled.querySelector("th.mat-column-surname").textContent
-    ).toContain("Surname");
+    ).toContain("Cognome");
 
     expect(
       compiled.querySelector("th.mat-column-dateOfBirth").textContent
-    ).toContain("Date of birth");
+    ).toContain("Data di nascita");
 
     expect(compiled.querySelector("th.mat-column-email").textContent).toContain(
       "Email"

@@ -16,6 +16,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 describe("AddUserComponent", () => {
   let component: AddUserComponent;
@@ -39,7 +40,8 @@ describe("AddUserComponent", () => {
         MatCardModule,
         MatFormFieldModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatSnackBarModule
       ]
     }).compileComponents();
   }));

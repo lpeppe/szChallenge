@@ -2,6 +2,7 @@ import { User } from "./../models/user.model";
 import { map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
+import { environment } from "./../../environments/environment";
 
 import { Observable } from "rxjs";
 import { UserData } from "../models/usersData.model";
@@ -10,7 +11,7 @@ import { UserData } from "../models/usersData.model";
   providedIn: "root"
 })
 export class UserService {
-  private serviceUrl = "http://localhost:3333/api/v1";
+  private serviceUrl = `http://${environment.backendDomain}:3333/api/v1`;
   constructor(private http: HttpClient) {}
 
   getUserData(

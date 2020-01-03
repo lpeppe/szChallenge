@@ -3,7 +3,7 @@ services:
   frontend:
     build: frontend
     ports:
-      - "8080:8080"
+      - "4200:4200"
     container_name: sz-front-container
     depends_on:
       - backend

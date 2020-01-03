@@ -1,0 +1,27 @@
+version: "3"
+services:
+  frontend:
+    build:
+        context: ../frontend
+        dockerfile: Dockerfile.e2e
+    ports:
+      - "4200:4200"
+    container_name: e2e-front-container
+    depends_on:
+      - backend
+  backend:
+    build: ../backend
+    ports:
+      - "3333:3333"
+    container_name: e2e-back-container
+  cypress:
+    image: "cypress/included:3.4.0"
+    depends_on:
+      - frontend
+      - backend
+    environment:
+      - CYPRESS_baseUrl=http://frontend:4200
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e
+    container_name: e2e-cypress-container

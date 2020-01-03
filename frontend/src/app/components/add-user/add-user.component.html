@@ -3,15 +3,15 @@
 </mat-toolbar>
 <form (ngSubmit)="onSubmit()" [formGroup]="addUserForm" #form="ngForm">
   <div class="form-container">
-    <mat-form-field>
+    <mat-form-field id="nameFormField">
       <input matInput placeholder="Nome" formControlName="firstName" />
       <mat-error>Inserisci il nome</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field id="surnameFormField">
       <input matInput placeholder="Cognome" formControlName="surname" />
       <mat-error>Inserisci il cognome</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field id="dateFormField">
       <input
         appDate
         matInput
@@ -20,7 +20,7 @@
       />
       <mat-error>Data di nascita non valida</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field id="emailFormField">
       <input matInput placeholder="Email" formControlName="email" />
       <mat-error>Email non valida</mat-error>
     </mat-form-field>

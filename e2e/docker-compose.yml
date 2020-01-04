@@ -1,24 +1,32 @@
-version: "3"
+version: "2.1"
 services:
   frontend:
-    build:
-        context: ../frontend
-        dockerfile: Dockerfile.e2e
+    build: ../frontend
     ports:
       - "4200:4200"
     container_name: e2e-front-container
     depends_on:
       - backend
+    command: ["npx", "ng", "serve", "--host", "0.0.0.0", "--disable-host-check", "-c", "e2e"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
   backend:
     build: ../backend
     ports:
       - "3333:3333"
     container_name: e2e-back-container
+    environment:
+      - NODE_ENV=testing
   cypress:
-    image: "cypress/included:3.4.0"
+    image: "cypress/included:3.8.1"
     depends_on:
-      - frontend
-      - backend
+      backend:
+        condition: service_started
+      frontend:
+        condition: service_healthy
     environment:
       - CYPRESS_baseUrl=http://frontend:4200
     working_dir: /e2e

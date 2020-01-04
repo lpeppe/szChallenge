@@ -3,7 +3,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 RUN npm i
-RUN npm i -g @adonisjs/cli
+RUN npm i -g @adonisjs/cli 
 COPY . /usr/src/app
 EXPOSE 3333
-CMD ["adonis", "serve"]
+CMD ["adonis", "migration:refresh", "&&", "adonis", "seed", "&&", "adonis", "serve"]

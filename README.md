@@ -34,6 +34,7 @@ docker-compose run backend adonis test
 ### Unit test per il frontend
 ```
 cd frontend/
+npm i
 ng test
 ```
 

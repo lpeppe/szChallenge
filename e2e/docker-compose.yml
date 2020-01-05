@@ -7,7 +7,7 @@ services:
     container_name: e2e-front-container
     depends_on:
       - backend
-    command: ["npx", "ng", "serve", "--host", "0.0.0.0", "--disable-host-check", "-c", "e2e"]
+    command: "npx ng serve --host 0.0.0.0 --disable-host-check -c e2e"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4200"]
       interval: 5s
@@ -20,7 +20,6 @@ services:
     container_name: e2e-back-container
     environment:
       - NODE_ENV=testing
-    command: ["adonis", "migration:refresh", "&&", "adonis", "seed", "&&", "adonis", "serve"]
   cypress:
     image: "cypress/included:3.8.1"
     depends_on:

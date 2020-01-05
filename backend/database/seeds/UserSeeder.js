@@ -18,9 +18,12 @@ const userData = require("./testData.json");
 
 class UserSeeder {
   async run() {
+    // if the seeding is not running in testing mode, user
+    // data is generated randomly using the factory
     if (Env.get("NODE_ENV") != "testing")
       await Factory.model("App/Models/User").createMany(30);
     else {
+      // otherwise user data is created deterministically
       await User.createMany(
         userData.map(({ firstName, surname, email, dateOfBirth }) => ({
           email,

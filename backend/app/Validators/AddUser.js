@@ -1,5 +1,8 @@
 "use strict";
 
+/**
+ * This class defines the validation rules applied to every user
+ */
 class AddUser {
   get rules() {
     return {

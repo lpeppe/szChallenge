@@ -1,15 +1,3 @@
-describe("Pagination functionality", () => {
-  it("Pages are changed properly", () => {
-    cy.visit("/users");
-    cy.get("table tr:nth-child(1) > td.mat-column-firstName").contains(
-      "Harriett"
-    );
-    cy.get("mat-paginator button.mat-paginator-navigation-next").click();
-    cy.get("table tr:nth-child(1) > td.mat-column-firstName").contains("Maria");
-    cy.get("mat-paginator button.mat-paginator-navigation-next").click();
-    cy.get("table tr:nth-child(1) > td.mat-column-firstName").contains("Mary");
-  });
-});
 describe("Filtering functionality", () => {
   it("Name filtering works properly", () => {
     cy.visit("/users");

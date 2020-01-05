@@ -15,6 +15,7 @@ docker-compose -f docker-compose.yml up --build
 ```
 docker-compose -f docker-compose.yml -f docker-compose.ssr.yml up --build
 ```
+In entrambi i casi l'applicazione sarà accessibile su `http://localhost:4200`
 ## Testing
 Sono stati implementati i seguenti test:
 * Unit test per il backend

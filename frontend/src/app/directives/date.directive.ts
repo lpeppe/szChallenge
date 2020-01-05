@@ -12,18 +12,22 @@ export const TEST_VALUE_ACCESSOR: any = {
   useExisting: forwardRef(() => DateDirective),
   multi: true
 };
-
+/**
+ * Directive to properly format the input date field
+ */
 @Directive({
   selector: "input[appDate]",
   providers: [TEST_VALUE_ACCESSOR]
 })
 export class DateDirective implements ControlValueAccessor {
+  /** @ignore */
   onChange = (_: any) => {};
+  /** @ignore */
   onTouched = () => {};
 
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 
-  // this gets called when the value gets changed from the code outside
+  /** @ignore */
   writeValue(value: any): void {
     const normalizedValue = value == null ? "" : value;
     this.renderer.setProperty(
@@ -33,13 +37,16 @@ export class DateDirective implements ControlValueAccessor {
     );
   }
 
+  /** @ignore */
   registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
   }
+  /** @ignore */
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
+  /** @ignore */
   setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(
       this.elementRef.nativeElement,
@@ -48,10 +55,11 @@ export class DateDirective implements ControlValueAccessor {
     );
   }
 
-  // just as an example - let's make this field accept only numbers
+  /**
+   * Accept only numbers and backspace
+   */
   @HostListener("keydown", ["$event"])
   _handleKeyDown($event: KeyboardEvent): void {
-    // accept only numbers or backspace
     if (
       ($event.keyCode < 48 ||
         $event.keyCode > 57 ||
@@ -63,12 +71,17 @@ export class DateDirective implements ControlValueAccessor {
     }
   }
 
-  // set the input field as touched with the blur event
+  /**
+   * Set the field as touched on blur
+   */
   @HostListener("blur", ["$event"])
   _handleBlur($event: KeyboardEvent): void {
     this.onTouched();
   }
 
+  /**
+   * On input event format date properly
+   */
   @HostListener("input", ["$event"])
   _handleInput($event: any): void {
     if (

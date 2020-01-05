@@ -3,14 +3,23 @@ import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
 import { UserService } from "./../../services/user.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
+/**
+ * Component containing the form to submit new users
+ */
 @Component({
   selector: "app-add-user",
   templateUrl: "./add-user.component.html",
   styleUrls: ["./add-user.component.scss"]
 })
 export class AddUserComponent implements OnInit {
+  /**
+   * The form that contains user data
+   */
   @ViewChild("form", { static: false }) form: NgForm;
-  dateStr: string;
+
+  /**
+   * The FormGroup associated to the add user form
+   */
   addUserForm: FormGroup;
 
   constructor(
@@ -18,6 +27,9 @@ export class AddUserComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
+  /**
+   * Initializes the FormGroup with validators
+   */
   ngOnInit() {
     this.addUserForm = new FormGroup({
       firstName: new FormControl(null, [
@@ -40,22 +52,31 @@ export class AddUserComponent implements OnInit {
       ])
     });
   }
+
+  /**
+   * Is invoked upon user submission and uses the userService to
+   * submit the new user. After receiving response from the
+   * userService, it shows a snackbar notification
+   */
   onSubmit() {
     this.userService.addUser(this.addUserForm.value).subscribe(
       _ => {
+        // if the user submission is successful, reset form
+        // and show the snackbar
         this.form.resetForm();
         this.addUserForm.reset();
-        // this.snackBar.openFromComponent(SnackBarComponent, {
-        //   duration: 2000
-        // });
         this.openSnackback("Utente aggiunto!");
       },
       () => {
+        // if the submission isn't successful, show the snackbar
         this.openSnackback("C'è stato un errore!");
       }
     );
   }
-
+  /**
+   * This method is called to show the snackbar
+   * @param message The message to show in the snackbar
+   */
   private openSnackback(message: string) {
     this.snackBar.open(message, null, {
       duration: 2000

@@ -5,12 +5,17 @@ import { Observable, of, BehaviorSubject } from "rxjs";
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user.model";
 /**
- * Data source for the UsersTable view. This class should
- * encapsulate all logic for fetching and manipulating the displayed data
- * (including sorting, pagination, and filtering).
+ * Data source for the UsersTable view. This class
+ * encapsulates all logic for fetching and manipulating the displayed data
  */
 export class UsersTableDataSource extends DataSource<User> {
+  /**
+   * The total number of users
+   */
   totalLength: number;
+  /**
+   * The behaviorsubject that emits new users
+   */
   private usersSubject = new BehaviorSubject<User[]>([]);
 
   constructor(private userService: UserService) {
@@ -20,7 +25,7 @@ export class UsersTableDataSource extends DataSource<User> {
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
-   * @returns A stream of the items to be rendered.
+   * @returns A stream of the users to be rendered.
    */
   connect(): Observable<User[]> {
     return this.usersSubject.asObservable();
@@ -34,6 +39,13 @@ export class UsersTableDataSource extends DataSource<User> {
     this.usersSubject.complete();
   }
 
+  /**
+   * Retrieves user data from the userService and emits
+   * new values on the usersSubject
+   * @param pageIndex The index of the page
+   * @param pageSize The page size
+   * @param filter The filter to be applied
+   */
   loadUsers(pageIndex: number, pageSize: number, filter = "") {
     this.userService
       .getUserData(pageIndex, pageSize, filter)

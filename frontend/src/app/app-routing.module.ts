@@ -4,14 +4,14 @@ import { Routes, RouterModule } from "@angular/router";
 import { AddUserComponent } from "./components/add-user/add-user.component";
 import { UsersTableComponent } from "./components/users-table/users-table.component";
 
-const routes: Routes = [
+const APP_ROUTES: Routes = [
   { path: "users", component: UsersTableComponent },
   { path: "addUser", component: AddUserComponent },
   { path: "", redirectTo: "users", pathMatch: "full" }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(APP_ROUTES)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

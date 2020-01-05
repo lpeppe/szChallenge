@@ -20,6 +20,7 @@ services:
     container_name: e2e-back-container
     environment:
       - NODE_ENV=testing
+    command: ["adonis", "migration:refresh", "&&", "adonis", "seed", "&&", "adonis", "serve"]
   cypress:
     image: "cypress/included:3.8.1"
     depends_on:

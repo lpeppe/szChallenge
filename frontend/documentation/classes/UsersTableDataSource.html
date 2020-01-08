@@ -67,9 +67,8 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Data source for the UsersTable view. This class should
-encapsulate all logic for fetching and manipulating the displayed data
-(including sorting, pagination, and filtering).</p>
+                <p>Data source for the UsersTable view. This class
+encapsulates all logic for fetching and manipulating the displayed data</p>
 
             </p>
 
@@ -145,7 +144,7 @@ encapsulate all logic for fetching and manipulating the displayed data
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -208,10 +207,16 @@ encapsulate all logic for fetching and manipulating the displayed data
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:15</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The total number of users</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -235,10 +240,16 @@ encapsulate all logic for fetching and manipulating the displayed data
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:19</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The behaviorsubject that emits new users</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -271,8 +282,8 @@ encapsulate all logic for fetching and manipulating the displayed data
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="25"
-                            class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:25</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:30</a></div>
                 </td>
             </tr>
 
@@ -290,7 +301,7 @@ the returned stream emits new items.</p>
 
                     </div>
                     <div class="io-description">
-                        <p>A stream of the items to be rendered.</p>
+                        <p>A stream of the users to be rendered.</p>
 
                     </div>
                 </td>
@@ -319,8 +330,8 @@ the returned stream emits new items.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:33</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:38</a></div>
                 </td>
             </tr>
 
@@ -361,14 +372,17 @@ any open connections or free any held resources that were set up during connect.
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">src/app/components/users-table/users-table-datasource.ts:49</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Retrieves user data from the userService and emits
+new values on the usersSubject</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -379,6 +393,7 @@ any open connections or free any held resources that were set up during connect.
                                     <td>Type</td>
                                     <td>Optional</td>
                                     <td>Default value</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -395,6 +410,10 @@ any open connections or free any held resources that were set up during connect.
                                     <td>
                                     </td>
 
+                                    <td>
+                                        <p>The index of the page</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>pageSize</td>
@@ -409,6 +428,10 @@ any open connections or free any held resources that were set up during connect.
                                     <td>
                                     </td>
 
+                                    <td>
+                                        <p>The page size</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>filter</td>
@@ -424,6 +447,10 @@ any open connections or free any held resources that were set up during connect.
                                         <code>&quot;&quot;</code>
                                     </td>
 
+                                    <td>
+                                        <p>The filter to be applied</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -458,12 +485,17 @@ import { Observable, of, BehaviorSubject } from &quot;rxjs&quot;;
 import { UserService } from &quot;../../services/user.service&quot;;
 import { User } from &quot;../../models/user.model&quot;;
 /**
- * Data source for the UsersTable view. This class should
- * encapsulate all logic for fetching and manipulating the displayed data
- * (including sorting, pagination, and filtering).
+ * Data source for the UsersTable view. This class
+ * encapsulates all logic for fetching and manipulating the displayed data
  */
 export class UsersTableDataSource extends DataSource&lt;User&gt; {
+  /**
+   * The total number of users
+   */
   totalLength: number;
+  /**
+   * The behaviorsubject that emits new users
+   */
   private usersSubject &#x3D; new BehaviorSubject&lt;User[]&gt;([]);
 
   constructor(private userService: UserService) {
@@ -473,7 +505,7 @@ export class UsersTableDataSource extends DataSource&lt;User&gt; {
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
-   * @returns A stream of the items to be rendered.
+   * @returns A stream of the users to be rendered.
    */
   connect(): Observable&lt;User[]&gt; {
     return this.usersSubject.asObservable();
@@ -487,6 +519,13 @@ export class UsersTableDataSource extends DataSource&lt;User&gt; {
     this.usersSubject.complete();
   }
 
+  /**
+   * Retrieves user data from the userService and emits
+   * new values on the usersSubject
+   * @param pageIndex The index of the page
+   * @param pageSize The page size
+   * @param filter The filter to be applied
+   */
   loadUsers(pageIndex: number, pageSize: number, filter &#x3D; &quot;&quot;) {
     this.userService
       .getUserData(pageIndex, pageSize, filter)
